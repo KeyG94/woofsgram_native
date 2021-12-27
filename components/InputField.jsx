@@ -7,16 +7,19 @@ export default function InputField(props) {
     placeholder,
     value,
     onChangeText,
-    secureTextEntry = false,
+    secureTextEntry,
+    onSubmitEditing,
   } = props;
   return (
-    <View>
-      <Text>{label}: </Text>
+    <View style={{ padding: 16 }}>
+      <Text style={{ padding: 8 }}>{label}: </Text>
       <TextInput
+        style={{ padding: 8, fontSize: 18 }}
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
+        onSubmitEditing={onSubmitEditing}
       />
     </View>
   );

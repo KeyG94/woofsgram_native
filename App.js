@@ -1,19 +1,33 @@
 import React from "react";
-import { View } from "react-native";
+import { ScrollView } from "react-native";
 import InputField from "./components/InputField";
 import { useState } from "react";
 
 const App = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [controlPassword, setControlPassword] = useState(null);
   const [petName, setPetName] = useState(null);
   const [birthdate, setBirthdate] = useState(null);
   const [breed, setBreed] = useState(null);
   const [favoriteToy, setFavoriteToy] = useState(null);
 
+  const checkPassword = (props) => {
+    const {
+      nativeEvent: { text },
+    } = props;
+    if (text !== password) {
+      alert("password does not match");
+    }
+  };
+
   return (
-    <View
-      style={{ flex: 1, justifyContent: "center", backgroundColor: "#ecf0f1" }}
+    <ScrollView
+      contentContainerStyle={{
+        flex: 1,
+        justifyContent: "center",
+        backgroundColor: "#ecf0f1",
+      }}
     >
       <InputField
         label="Email"
@@ -32,9 +46,10 @@ const App = () => {
       <InputField
         label="Confirm Password"
         placeholder="type password here"
-        value={password}
-        onChangeText={setPassword}
+        value={controlPassword}
+        onChangeText={setControlPassword}
         secureTextEntry
+        onSubmitEditing={checkPassword}
       />
       <InputField
         label="Pet's Name"
@@ -64,7 +79,7 @@ const App = () => {
         onChangeText={setFavoriteToy}
         secureTextEntry={false}
       />
-    </View>
+    </ScrollView>
   );
 };
 export default App;
