@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView, Button, Text } from "react-native";
 import InputField from "./components/InputField";
-import { Formik, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import * as yup from "yup";
 
 const reviewSchema = yup.object({
@@ -13,7 +13,7 @@ const reviewSchema = yup.object({
     .when("password", (password, schema) => {
       if (password) return schema.required("Confirm Password is required");
     })
-    .oneOf([yup.ref("password")]),
+    .oneOf([yup.ref("password"), "must match with password"]),
 });
 
 const App = () => {
@@ -32,7 +32,14 @@ const App = () => {
         }, 400);
       }}
     >
-      {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
+      {({
+        values,
+        handleChange,
+        handleSubmit,
+        isSubmitting,
+        errors,
+        touched,
+      }) => (
         <ScrollView
           contentContainerStyle={{
             flex: 1,
@@ -46,7 +53,9 @@ const App = () => {
             onChangeText={handleChange("email")}
             secureTextEntry={false}
           />
-          {errors.email ? <Text>{errors.email}</Text> : null}
+          <Text style={{ color: "red", padding: 6 }}>
+            {touched.email && errors.email}
+          </Text>
           <InputField
             label="Password"
             placeholder="type password here"
@@ -54,6 +63,9 @@ const App = () => {
             onChangeText={handleChange("password")}
             secureTextEntry
           />
+          <Text style={{ color: "red", padding: 6 }}>
+            {touched.password && errors.password}
+          </Text>
           <InputField
             label="Confirm Password"
             placeholder="type password here"
@@ -62,6 +74,9 @@ const App = () => {
             secureTextEntry
             onSubmitEditing={handleSubmit}
           />
+          <Text style={{ color: "red", padding: 6 }}>
+            {touched.controlPassword && errors.controlPassword}
+          </Text>
           <Button title="submit" onPress={handleSubmit} disabled={isSubmitting}>
             Submit
           </Button>
