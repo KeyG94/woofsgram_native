@@ -1,29 +1,38 @@
 import React from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, Button, Text } from "react-native";
 import InputField from "./components/InputField";
-import { Formik } from "formik";
+import { Formik, ErrorMessage } from "formik";
+import * as yup from "yup";
+
+const reviewSchema = yup.object({
+  email: yup.string().email().required("email is required"),
+  password: yup.string().required("password is required"),
+  controlPassword: yup
+    .string()
+    .required("Confirmation password is required")
+    .when("password", (password, schema) => {
+      if (password) return schema.required("Confirm Password is required");
+    })
+    .oneOf([yup.ref("password")]),
+});
 
 const App = () => {
-  const onSubmit = (values) => {
-    if (values.controlPassword !== values.password) {
-      alert("password does not match");
-    }
-  };
-
   return (
     <Formik
       initialValues={{
         email: "",
         password: "",
         controlPassword: "",
-        petName: "",
-        petBirth: "",
-        petBreed: "",
-        petFavToy: "",
       }}
-      onSubmit={onSubmit}
+      validationSchema={reviewSchema}
+      onSubmit={(values, { setSubmitting }) => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2));
+          setSubmitting(false);
+        }, 400);
+      }}
     >
-      {({ values, handleChange, handleSubmit }) => (
+      {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
         <ScrollView
           contentContainerStyle={{
             flex: 1,
@@ -37,6 +46,7 @@ const App = () => {
             onChangeText={handleChange("email")}
             secureTextEntry={false}
           />
+          {errors.email ? <Text>{errors.email}</Text> : null}
           <InputField
             label="Password"
             placeholder="type password here"
@@ -52,34 +62,9 @@ const App = () => {
             secureTextEntry
             onSubmitEditing={handleSubmit}
           />
-          <InputField
-            label="Pet's Name"
-            placeholder="pets name here"
-            value={values.petName}
-            onChangeText={handleChange("petName")}
-            secureTextEntry={false}
-          />
-          <InputField
-            label="Pet's Date of birth"
-            placeholder="pets birthdate here"
-            value={values.birthdate}
-            onChangeText={handleChange("petBirth")}
-            secureTextEntry={false}
-          />
-          <InputField
-            label="breed"
-            placeholder="pets breed here"
-            value={values.breed}
-            onChangeText={handleChange("petBreed")}
-            secureTextEntry={false}
-          />
-          <InputField
-            label="Favorite toy"
-            placeholder="pets toy here"
-            value={values.favPetToy}
-            onChangeText={handleChange("favPetToy")}
-            secureTextEntry={false}
-          />
+          <Button title="submit" onPress={handleSubmit} disabled={isSubmitting}>
+            Submit
+          </Button>
         </ScrollView>
       )}
     </Formik>
