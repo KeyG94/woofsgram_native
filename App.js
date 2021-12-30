@@ -3,6 +3,7 @@ import { ScrollView, Button, Text } from "react-native";
 import InputField from "./components/InputField";
 import { Formik } from "formik";
 import * as yup from "yup";
+import FlatButton from "./components/Button";
 
 //yup imported from yup using npm install yup
 const reviewSchema = yup.object({
@@ -65,10 +66,12 @@ const App = () => {
             secureTextEntry={false}
             onBlur={handleBlur("email")}
           />
+
           {/*Touched checks if this component has been touched */}
           <Text style={{ color: "red", padding: 6 }}>
             {touched.email && errors.email}
           </Text>
+
           {/* Input field for password */}
           <InputField
             label="Password"
@@ -78,9 +81,11 @@ const App = () => {
             secureTextEntry
             onBlur={handleBlur("password")}
           />
+
           <Text style={{ color: "red", padding: 6 }}>
             {touched.password && errors.password}
           </Text>
+
           {/* Input field for control password */}
           <InputField
             label="Confirm Password"
@@ -93,12 +98,15 @@ const App = () => {
             onSubmitEditing={handleSubmit}
             onBlur={handleBlur("controlPassword")}
           />
+
           <Text style={{ color: "red", padding: 6 }}>
             {touched.controlPassword && errors.controlPassword}
           </Text>
-          <Button title="submit" onPress={handleSubmit} disabled={isSubmitting}>
-            Submit
-          </Button>
+          <FlatButton
+            text="Submit"
+            onPress={handleSubmit}
+            disabled={isSubmitting}
+          ></FlatButton>
         </ScrollView>
       )}
     </Formik>
