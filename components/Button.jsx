@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 
 export default function FlatButton({ text, onPress, disabled }) {
   return (
+    //Touchable opacity is another form for button on mobile
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled}
