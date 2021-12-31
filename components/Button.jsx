@@ -13,6 +13,10 @@ export default function FlatButton({ text, onPress, disabled }) {
         marginLeft: "auto",
         marginRight: "auto",
       }}
+      //help accessibility readers communicate the action that will be performed when pressing the button.
+      accessible={true}
+      accessibilityLabel="Press to submit"
+      accessibilityHint="your info will be submitted"
     >
       <View style={styles.button}>
         <Text style={styles.buttonText}>{text}</Text>
