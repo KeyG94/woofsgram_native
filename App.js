@@ -65,6 +65,9 @@ const App = () => {
             //secureTextEntry usually is false by default, not sure why it doesnt work here?
             secureTextEntry={false}
             onBlur={handleBlur("email")}
+            accessible={true}
+            accessibilityLabel="Press to enter email"
+            accessibilityHint="input box for your email info"
           />
 
           {/*Touched checks if this component has been touched */}
@@ -80,6 +83,9 @@ const App = () => {
             onChangeText={handleChange("password")}
             secureTextEntry
             onBlur={handleBlur("password")}
+            accessible={true}
+            accessibilityLabel="Press to input your password"
+            accessibilityHint="your password will be submitted"
           />
 
           <Text style={{ color: "red", padding: 6 }}>
@@ -97,6 +103,9 @@ const App = () => {
             //Might remove later
             onSubmitEditing={handleSubmit}
             onBlur={handleBlur("controlPassword")}
+            accessible={true}
+            accessibilityLabel="Press to enter a confirmation password"
+            accessibilityHint="your confirmation password will be checked against your password"
           />
 
           <Text style={{ color: "red", padding: 6 }}>
