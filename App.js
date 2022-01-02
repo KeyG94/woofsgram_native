@@ -65,6 +65,7 @@ const App = () => {
             //secureTextEntry usually is false by default, not sure why it doesnt work here?
             secureTextEntry={false}
             onBlur={handleBlur("email")}
+            //maybe accessibilitycomponent?
             accessible={true}
             accessibilityLabel="Press to enter email"
             accessibilityHint="input box for your email info"
